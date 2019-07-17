@@ -1,0 +1,49 @@
+{
+  "id": "SIN IDENTIFICADOR",
+  "organismoExpediente": "JNQJE1",
+  "tipoExpediente": "EXP",
+  "numeroExpediente": "559677",
+  "anioExpediente": "2016",
+  "fueroExpediente": "EJECUTIVO",
+  "idDocumental": "SIN IDENTIFICADOR",
+  "caratulaExpediente": "ESCOBAR ZARATE PATRICIO ANDRES C/ RIVAS MIGUEL ANGEL S/COBRO EJECUTIVO",
+  "bucket": "JNQJE1",
+  "marcas": {
+    "adhoc": false,
+    "facultado": {
+      "nombre": null,
+      "dni": null
+    }
+  },
+  "uid": "MUESTRA",
+  "sha": "",
+  "zona": {
+    "calle": "Santiago del Estero",
+    "numero": 149,
+    "ciudad": "Neuquén",
+    "observacion": "Casa Roja",
+    "idZona": 5,
+    "zona": "Zona 06",
+    "punto": [
+      -68.06489293554107,
+      -38.95342504298955
+    ]
+  },
+  "persona": {
+    "nombre": "Juan Perez",
+    "numeroID": "32708082",
+    "tipo": "FISICA",
+    "tipoID": "DNI",
+    "vinculo": null
+  },
+  "organismo": {
+    "codigo": "JNQJE1",
+    "nombre": "JUZGADO DE JUICIOS EJECUTIVOS N° 1",
+    "direccion": "DIAGONAL 25 DE MAYO 51",
+    "ubicacion": "2º  Y 3º PISO",
+    "ciudad": "NEUQUEN",
+    "cargo": "GHISINI, JAVIER HERNAN",
+    "secretaria": "VARNI, MARIA LUCRECIA",
+    "__typename": "OrganismoGuia"
+  }
+}
