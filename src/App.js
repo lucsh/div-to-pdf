@@ -1,44 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import { print } from './pdf-utils';
 import { setBlockData } from 'draftjs-utils';
 import example from './example';
+import rawDataExample from './rawDataExample';
 
-import {
-  Editor,
-  EditorState,
-  RichUtils,
-  convertToRaw,
-  getPlainText,
-} from 'draft-js';
+import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from 'draft-js';
+import { EditorContainer } from './Components'
 
-const styles = {
-  root: {
-    fontFamily: "'Helvetica', sans-serif",
-    padding: 20,
-    width: 600,
-  },
-  editor: {
-    border: '1px solid #ccc',
-    cursor: 'text',
-    minHeight: 80,
-    padding: 10,
-  },
-  button: {
-    marginTop: 10,
-    textAlign: 'center',
-  },
-};
 
 function App() {
-  const [editorState, setEditorState] = React.useState(
-    EditorState.createEmpty()
-  );
+  const [editorState, setEditorState] = React.useState(EditorState.createEmpty());
+  let editor = React.createRef();
+
+  useEffect(() => focusEditor(), []);
 
   const styleMap = {
     STRIKETHROUGH: {
       textDecoration: 'line-through',
     },
+  };
+
+  const importData = () => {
+    setEditorState(EditorState.createWithContent(convertFromRaw(rawDataExample)));
   };
 
   const imprimir = () => {
@@ -47,72 +31,106 @@ function App() {
     console.log('imprimiendo ...');
     console.log(contentState.getPlainText());
     const raw = convertToRaw(contentState);
+    console.log('< raw');
+    console.log(raw);
+    console.log('raw />');
     const toPrint = [{ ...example, texto: raw }];
     print(toPrint);
   };
 
   const blockStyleFn = contentBlock => {
+    const type = contentBlock.getType();
+    if (type === 'header') {
+      return 'header';
+    }
+
+    const indented = contentBlock.getData().get('indented');
+    if (indented) {
+      return `indented`;
+    }
+
     const align = contentBlock.getData().get('align');
     if (align) {
       return `align-${align}`;
     }
+
   };
 
-  const _onBoldClick = () => {
+  const onHeaderClick = (e) => {
+    e.preventDefault();
+    setEditorState(RichUtils.toggleBlockType(editorState, 'header'));
+  };
+
+  const onBoldClick = () => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, 'BOLD'));
   };
 
-  const _onItalicClick = () => {
+  const onItalicClick = () => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, 'ITALIC'));
   };
 
-  const _onUnderlineClick = () => {
+  const onUnderlineClick = () => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, 'UNDERLINE'));
   };
 
-  const _onStrikeClick = () => {
+  const onStrikeClick = () => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, 'STRIKETHROUGH'));
   };
 
-  const _onAligmentRightClick = e => {
+  const onIndentClick = (e) => {
+    e.preventDefault();
+
+    const selection = editorState.getSelection()
+
+    const isIndented = editorState.getCurrentContent()
+      .getBlockForKey(selection.getStartKey())
+      .getData().get('indented');
+
+    setEditorState(setBlockData(editorState, { indented: !isIndented }));
+  };
+
+  const onAligmentRightClick = e => {
     e.preventDefault();
     setEditorState(setBlockData(editorState, { align: 'right' }));
   };
 
-  const _onAligmentCenterClick = e => {
+  const onAligmentCenterClick = e => {
     e.preventDefault();
     setEditorState(setBlockData(editorState, { align: 'center' }));
   };
 
-  const _onAligmentLeftClick = e => {
+  const onAligmentLeftClick = e => {
     e.preventDefault();
     setEditorState(setBlockData(editorState, { align: 'left' }));
   };
 
+  const focusEditor = () =>{
+    editor.current.focus();
+  }
+
   return (
     <>
-      <div style={styles.root}>
-        <div style={styles.editor}>
-          <button onClick={_onBoldClick}>Bold</button>
-          <button onClick={_onItalicClick}>Italic</button>
-          {/*<button onClick={_onUnderlineClick}>Under</button>*/}
-          {/*<button onClick={_onStrikeClick}>Strike</button>*/}
+        <EditorContainer  onClick={focusEditor}>
+          <button onMouseDown={onHeaderClick}>Ecabezado</button>
 
-          <button onClick={_onBoldClick}>Bold</button>
-          <button onClick={_onItalicClick}>Italic</button>
-          <button onClick={_onAligmentLeftClick}>Left</button>
-          <button onMouseDown={_onAligmentCenterClick}>Center</button>
-          <button onClick={_onAligmentRightClick}>Right</button>
-
+          {/*<button onClick={onUnderlineClick}>Under</button>*/}
+          {/*<button onClick={onStrikeClick}>Strike</button>*/}
+          <button onMouseDown={onBoldClick}>Bold</button>
+          <button onMouseDown={onItalicClick}>Italic</button>
+          <button onMouseDown={onIndentClick}>Sangria</button>
+          <button onMouseDown={onAligmentLeftClick}>Left</button>
+          <button onMouseDown={onAligmentCenterClick}>Center</button>
+          <button onMouseDown={onAligmentRightClick}>Right</button>
           <Editor
+            ref={editor}
             blockStyleFn={blockStyleFn}
             customStyleMap={styleMap}
             editorState={editorState}
             onChange={setEditorState}
           />
-        </div>
-      </div>
+        </EditorContainer>
       <button onClick={imprimir}>imprimir</button>
+      <button onClick={importData}>importar</button>
     </>
   );
 }

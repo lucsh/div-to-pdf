@@ -5,7 +5,6 @@
   "numeroExpediente": "559677",
   "anioExpediente": "2016",
   "fueroExpediente": "EJECUTIVO",
-  "idDocumental": "SIN IDENTIFICADOR",
   "caratulaExpediente": "ESCOBAR ZARATE PATRICIO ANDRES C/ RIVAS MIGUEL ANGEL S/COBRO EJECUTIVO",
   "bucket": "JNQJE1",
   "marcas": {
@@ -42,6 +41,7 @@
     "direccion": "DIAGONAL 25 DE MAYO 51",
     "ubicacion": "2º  Y 3º PISO",
     "ciudad": "NEUQUEN",
+    "circunscripcion": "I",
     "cargo": "GHISINI, JAVIER HERNAN",
     "secretaria": "VARNI, MARIA LUCRECIA",
     "__typename": "OrganismoGuia"

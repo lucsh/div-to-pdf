@@ -1,0 +1,95 @@
+{
+  "blocks": [
+    {
+      "text": "JUZGADO DE JUICIOS EJECUTIVOS N° 1",
+      "type": "header"
+    },
+    {
+      "text": "I Circunscripción Judicial de la Provincia del Neuquén",
+      "type": "header"
+    },
+    {
+      "text": "DIAGONAL 25 DE MAYO 51, 2º  Y 3º PISO",
+      "type": "header"
+    },
+    {
+      "text": "\n"
+    },
+    {
+      "text": "\n"
+    },
+    {
+      "text": "Neuquén, lunes 25 de mayo de 2019.",
+      "data": {
+        "align": "right"
+      }
+    },
+    {
+      "text": "\n"
+    },
+    {
+      "text": "\n"
+    },
+    {
+      "key": "32nvj",
+      "text": "Señor/es"
+    },
+    {
+      "text": "Juan Perez"
+    },
+    {
+      "text": "S......./.......D"
+    },
+    {
+      "text": "\n"
+    },
+    {
+      "text": "Me dirijo a Ud. en los autos caratulados: ”ESCOBAR ZARATE PATRICIO ANDRES C/ RIVAS MIGUEL ANGEL S/COBRO EJECUTIVO” (Expte. N° JNQJE1-EXP-559677/2016) en trámite por ante este JUZGADO DE JUICIOS EJECUTIVOS N° 1, a cargo de GHISINI, JAVIER HERNAN, Secretaría Única a cargo de VARNI, MARIA LUCRECIA, a los fines de ... .",
+      "data": {
+        "indented": true
+      },
+      "inlineStyleRanges": [
+        {
+          "offset": 194,
+          "length": 10,
+          "style": "BOLD"
+        },
+        {
+          "offset": 222,
+          "length": 7,
+          "style": "BOLD"
+        },
+        {
+          "offset": 222,
+          "length": 7,
+          "style": "ITALIC"
+        }
+      ]
+    },
+    {
+      "text": "\n"
+    },
+    {
+      "text": "Saludo a Ud. muy atentamente.",
+      "data": {
+        "indented": true
+      }
+    },
+    {
+      "text": "\n"
+    },
+    {
+      "text": "___________",
+      "data": {
+        "align": "right"
+      }
+    },
+    {
+      "text": "Juez",
+      "data": {
+        "align": "right"
+      }
+    }
+  ],
+  "entityMap": {}
+}
