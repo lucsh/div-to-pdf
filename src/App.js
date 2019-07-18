@@ -34,6 +34,9 @@ function App() {
     STRIKETHROUGH: {
       textDecoration: 'line-through',
     },
+    ITALICS: {
+      fontStyle: 'italic',
+    },
   };
 
   const importData = () => {
@@ -89,7 +92,7 @@ function App() {
     e.preventDefault();
     // limpio el Block type
     const newEditorState = RichUtils.toggleBlockType(editorState, 'unstyled');
-    setEditorState(RichUtils.toggleInlineStyle(newEditorState, 'ITALIC'));
+    setEditorState(RichUtils.toggleInlineStyle(newEditorState, 'ITALICS'));
   };
 
   const onUnderlineClick = (e) => {

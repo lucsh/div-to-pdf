@@ -46,6 +46,34 @@ const setContent = (documentos, muestra = true) => {
         if (linea.inlineStyleRanges.length !== 0) {
           // si exiten inlineStyleRanges quiere decir que hay estilos internos
 
+          //{
+          //   "key": "4dgik",
+          //   "text": "Me dirijo a Ud. en los autos caratulados: ”ESCOBAR ZARATE PATRICIO ANDRES C/ RIVAS MIGUEL ANGEL S/COBRO EJECUTIVO” (Expte. N° JNQJE1-EXP-559677/2016) en trámite por ante este JUZGADO DE JUICIOS EJECUTIVOS N° 1, a cargo de GHISINI, JAVIER HERNAN, Secretaría Única a cargo de VARNI, MARIA LUCRECIA, a los fines de ... .",
+          //   "type": "unstyled",
+          //   "depth": 0,
+          //   "inlineStyleRanges": [
+          //     {
+          //       "offset": 194,
+          //       "length": 10,
+          //       "style": "BOLD"
+          //     },
+          //     {
+          //       "offset": 222,
+          //       "length": 7,
+          //       "style": "BOLD"
+          //     },
+          //     {
+          //       "offset": 222,
+          //       "length": 7,
+          //       "style": "ITALIC"
+          //     }
+          //   ],
+          //   "entityRanges": [],
+          //   "data": {
+          //     "indented": true
+          //   }
+          // }
+
           let trimmedLength = 0;
           let rest = '';
 
@@ -59,9 +87,12 @@ const setContent = (documentos, muestra = true) => {
             const styled = text.slice(styledStart, fragmentEnd);
             rest = text.slice(fragmentEnd, text.length);
 
+            // TODO: multiples estilos en el mimso fragmento
+            // deberia usar siempre el mismo "text" e ir filtrando
+            // el "rest", aplciando los estilos donde sea necesario
+
             // voy armando el texto con los fragmentos
             // para los styled, envio el estilo:true
-            // TODO: multiples estilos en el mimso fragmento
             slicedText.push(unstyled, {
               text: styled,
               [el.style.toLowerCase()]: true,
