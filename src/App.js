@@ -1,16 +1,31 @@
-import React, {useEffect} from 'react';
-import './App.css';
-import { print } from './pdf-utils';
+import React, { useEffect } from 'react';
 import { setBlockData } from 'draftjs-utils';
+
+import { Bold } from 'styled-icons/boxicons-regular/Bold';
+import { Italic } from 'styled-icons/boxicons-regular/Italic';
+import { Text } from 'styled-icons/boxicons-regular/Text';
+import { RightIndent } from 'styled-icons/boxicons-regular/RightIndent';
+import { AlignLeft } from 'styled-icons/boxicons-regular/AlignLeft';
+import { AlignMiddle } from 'styled-icons/boxicons-regular/AlignMiddle';
+import { AlignRight } from 'styled-icons/boxicons-regular/AlignRight';
+
+import { print } from './pdfUtils';
 import example from './example';
 import rawDataExample from './rawDataExample';
 
-import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from 'draft-js';
-import { EditorContainer } from './Components'
-
+import {
+  Editor,
+  EditorState,
+  RichUtils,
+  convertToRaw,
+  convertFromRaw,
+} from 'draft-js';
+import { EditorContainer, FormatButton } from './Components';
 
 function App() {
-  const [editorState, setEditorState] = React.useState(EditorState.createEmpty());
+  const [editorState, setEditorState] = React.useState(
+    EditorState.createEmpty()
+  );
   let editor = React.createRef();
 
   useEffect(() => focusEditor(), []);
@@ -22,7 +37,9 @@ function App() {
   };
 
   const importData = () => {
-    setEditorState(EditorState.createWithContent(convertFromRaw(rawDataExample)));
+    setEditorState(
+      EditorState.createWithContent(convertFromRaw(rawDataExample))
+    );
   };
 
   const imprimir = () => {
@@ -53,82 +70,104 @@ function App() {
     if (align) {
       return `align-${align}`;
     }
-
   };
 
-  const onHeaderClick = (e) => {
+  const onHeaderClick = e => {
     e.preventDefault();
+    // TODO: limpiar stilos de la seleccion (remove data)
     setEditorState(RichUtils.toggleBlockType(editorState, 'header'));
   };
 
-  const onBoldClick = () => {
-    setEditorState(RichUtils.toggleInlineStyle(editorState, 'BOLD'));
+  const onBoldClick = (e) => {
+    e.preventDefault();
+    // limpio el Block type
+    const newEditorState = RichUtils.toggleBlockType(editorState, 'unstyled');
+    setEditorState(RichUtils.toggleInlineStyle(newEditorState, 'BOLD'));
   };
 
-  const onItalicClick = () => {
-    setEditorState(RichUtils.toggleInlineStyle(editorState, 'ITALIC'));
+  const onItalicClick = (e) => {
+    e.preventDefault();
+    // limpio el Block type
+    const newEditorState = RichUtils.toggleBlockType(editorState, 'unstyled');
+    setEditorState(RichUtils.toggleInlineStyle(newEditorState, 'ITALIC'));
   };
 
-  const onUnderlineClick = () => {
+  const onUnderlineClick = (e) => {
+    e.preventDefault();
     setEditorState(RichUtils.toggleInlineStyle(editorState, 'UNDERLINE'));
   };
 
-  const onStrikeClick = () => {
+  const onStrikeClick = (e) => {
+    e.preventDefault();
     setEditorState(RichUtils.toggleInlineStyle(editorState, 'STRIKETHROUGH'));
   };
 
-  const onIndentClick = (e) => {
+  const onIndentClick = e => {
     e.preventDefault();
+    // limpio el Block type
+    const newEditorState = RichUtils.toggleBlockType(editorState, 'unstyled');
+    const selection = editorState.getSelection();
 
-    const selection = editorState.getSelection()
-
-    const isIndented = editorState.getCurrentContent()
+    const isIndented = editorState
+      .getCurrentContent()
       .getBlockForKey(selection.getStartKey())
-      .getData().get('indented');
+      .getData()
+      .get('indented');
 
-    setEditorState(setBlockData(editorState, { indented: !isIndented }));
+    setEditorState(setBlockData(newEditorState, { indented: !isIndented }));
   };
 
   const onAligmentRightClick = e => {
     e.preventDefault();
-    setEditorState(setBlockData(editorState, { align: 'right' }));
+    // limpio el Block type
+    const newEditorState = RichUtils.toggleBlockType(editorState, 'unstyled');
+    setEditorState(setBlockData(newEditorState, { align: 'right' }));
   };
 
   const onAligmentCenterClick = e => {
     e.preventDefault();
-    setEditorState(setBlockData(editorState, { align: 'center' }));
+    // limpio el Block type
+    const newEditorState = RichUtils.toggleBlockType(editorState, 'unstyled');
+    setEditorState(setBlockData(newEditorState, { align: 'center' }));
   };
 
   const onAligmentLeftClick = e => {
     e.preventDefault();
-    setEditorState(setBlockData(editorState, { align: 'left' }));
+    // limpio el Block type
+    const newEditorState = RichUtils.toggleBlockType(editorState, 'unstyled');
+    setEditorState(setBlockData(newEditorState, { align: 'left' }));
   };
 
-  const focusEditor = () =>{
+  const focusEditor = () => {
     editor.current.focus();
-  }
+  };
 
   return (
     <>
-        <EditorContainer  onClick={focusEditor}>
-          <button onMouseDown={onHeaderClick}>Ecabezado</button>
-
-          {/*<button onClick={onUnderlineClick}>Under</button>*/}
-          {/*<button onClick={onStrikeClick}>Strike</button>*/}
-          <button onMouseDown={onBoldClick}>Bold</button>
-          <button onMouseDown={onItalicClick}>Italic</button>
-          <button onMouseDown={onIndentClick}>Sangria</button>
-          <button onMouseDown={onAligmentLeftClick}>Left</button>
-          <button onMouseDown={onAligmentCenterClick}>Center</button>
-          <button onMouseDown={onAligmentRightClick}>Right</button>
-          <Editor
-            ref={editor}
-            blockStyleFn={blockStyleFn}
-            customStyleMap={styleMap}
-            editorState={editorState}
-            onChange={setEditorState}
-          />
-        </EditorContainer>
+      <EditorContainer onClick={focusEditor}>
+        <FormatButton onMouseDown={onHeaderClick}>{<Text />}</FormatButton>
+        <FormatButton onMouseDown={onBoldClick}>{<Bold />}</FormatButton>
+        <FormatButton onMouseDown={onItalicClick}>{<Italic />}</FormatButton>
+        <FormatButton onMouseDown={onIndentClick}>
+          {<RightIndent />}
+        </FormatButton>
+        <FormatButton onMouseDown={onAligmentLeftClick}>
+          {<AlignLeft />}
+        </FormatButton>
+        <FormatButton onMouseDown={onAligmentCenterClick}>
+          {<AlignMiddle />}
+        </FormatButton>
+        <FormatButton onMouseDown={onAligmentRightClick}>
+          {<AlignRight />}
+        </FormatButton>
+        <Editor
+          ref={editor}
+          blockStyleFn={blockStyleFn}
+          customStyleMap={styleMap}
+          editorState={editorState}
+          onChange={setEditorState}
+        />
+      </EditorContainer>
       <button onClick={imprimir}>imprimir</button>
       <button onClick={importData}>importar</button>
     </>

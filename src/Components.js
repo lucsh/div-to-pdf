@@ -8,8 +8,8 @@ export const EditorContainer = styled.section`
     font-size: 1em;
     line-height: 1.5;
     padding: 2.54cm 2.54cm 2.54cm 1.5cm;
-    margin: 50px auto;
-    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.6);
+    margin: 20px auto;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
   }
   .align-left {
     text-align: left;
@@ -38,3 +38,28 @@ export const EditorContainer = styled.section`
     font-weight: bold;
   }
 `;
+
+export const FormatButton = styled.span`
+  svg {
+    height: 14px;
+  }
+  :hover {
+    background-color: #c8cbcf;
+  }
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1.33;
+  margin: 0;
+  padding: 15px;
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+  border-radius: 3px;
+  box-sizing: border-box;
+  color: #222f3e;
+  height: 60px;
+  min-width: 60px;
+  transition: background-color 0.2s ease-in, color 0.2s ease-in;
+`;
+
